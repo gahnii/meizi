@@ -4,93 +4,81 @@
 <meta charset="UTF-8">
 <title>meizini</title>
 <style>
-* { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin:0; padding:0; }
-body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 120px; overflow-x:hidden; flex-direction:column; align-items:center; }
+* { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+body { margin: 0; background: #fdeff4; display: flex; justify-content: center; padding: 40px 0 120px; overflow-x: hidden; }
 
 /* background images */
 .bg-megan-dani, .bg-collage {
   position: fixed;
-  width:22%;
-  opacity:0.2;
+  width: 22%;
+  height: auto;
+  opacity: 0.2;
   filter: blur(2px) brightness(1.05);
-  z-index:-1;
+  z-index: -1;
 }
-.bg-megan-dani { top:15%; left:12%; }
-.bg-collage { bottom:12%; right:10%; }
+.bg-megan-dani { top: 15%; left: 12%; }
+.bg-collage { bottom: 12%; right: 10%; }
 
 /* layout */
-.container { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; max-width:960px; width:100%; }
+.container { display: flex; gap: 20px; }
 
 /* sidebar icons */
-.sidebar { display:flex; flex-direction:column; gap:22px; padding-top:60px; align-items:center; }
-.icon-item img { width:26px; opacity:0.75; cursor:pointer; transition: transform .2s, opacity .2s; }
-.icon-item img:hover { transform:scale(1.15); opacity:1; }
+.sidebar { display: flex; flex-direction: column; gap: 22px; padding-top: 60px; }
+.sidebar .icon-item img { width: 26px; opacity: 0.75; cursor: pointer; transition: transform .2s, opacity .2s; }
+.sidebar .icon-item img:hover { transform: scale(1.15); opacity: 1; }
 .dropdown {
-  position:absolute; left:40px; top:50%; transform:translateY(-50%);
-  background:#fff; border-radius:14px; padding:14px 16px; width:240px;
-  font-size:13px; color:#555; box-shadow:0 10px 25px rgba(0,0,0,0.08);
-  opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:10;
+  position: absolute; left: 40px; top: 50%; transform: translateY(-50%);
+  background: #fff; border-radius: 14px; padding: 14px 16px; width: 240px;
+  font-size: 13px; color: #555; box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  opacity: 0; pointer-events: none; transition: opacity .2s ease; z-index: 10;
 }
-.dropdown strong { font-weight:500; color:#333; }
+.dropdown strong { font-weight: 500; color: #333; }
+.icon-item:hover .dropdown { opacity: 1; pointer-events: auto; }
 
 /* post card */
-.card { width:420px; background:#fff7fa; border-radius:26px; padding:18px; box-shadow:0 12px 30px rgba(0,0,0,.08); margin-bottom:20px; }
-.header { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
-.pfp { width:42px; height:42px; border-radius:50%; object-fit:cover; }
-.username { font-weight:600; }
-.time { font-size:12px; color:#999; }
-.post-img { width:100%; border-radius:18px; margin:10px 0; object-fit:cover; }
-.caption { font-size:14px; margin-top:6px; }
-.actions { display:flex; gap:16px; margin-top:10px; }
-.actions img { width:22px; cursor:pointer; transition: transform .2s, filter .2s; }
-.actions img:hover { transform:scale(1.2); filter:brightness(1.2); }
+.card { width: 420px; background: #fff7fa; border-radius: 26px; padding: 18px; box-shadow: 0 12px 30px rgba(0,0,0,.08); }
+.header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.pfp { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; }
+.username { font-weight: 600; }
+.time { font-size: 12px; color: #999; }
+.post-img { width: 100%; border-radius: 18px; margin: 10px 0; object-fit: cover; }
+.caption { font-size: 14px; margin-top: 6px; }
+.actions { display: flex; gap: 16px; margin-top: 10px; }
+.actions img { width: 22px; cursor: pointer; transition: transform .2s, filter .2s; }
+.actions img:hover { transform: scale(1.2); filter: brightness(1.2); }
 
 /* music player */
 #musicPlayer {
-  position:fixed; bottom:18px; background:#fff; width:360px; border-radius:22px;
-  padding:14px; display:flex; align-items:center; gap:14px; box-shadow:0 12px 30px rgba(0,0,0,.15);
+  position: fixed; bottom: 18px; background: #fff; width: 360px; border-radius: 22px;
+  padding: 14px; display: flex; align-items: center; gap: 14px; box-shadow: 0 12px 30px rgba(0,0,0,.15);
 }
-#coverImg { width:52px; height:52px; border-radius:12px; object-fit:cover; }
-.song-title { font-size:13px; flex:1; }
-.controls button { border:none; background:#f3dbe4; padding:6px 10px; border-radius:12px; cursor:pointer; font-size:12px; transition: background .2s, transform .2s; }
-.controls button:hover { background:#eac6d4; transform:scale(1.05); }
+#coverImg { width: 52px; height: 52px; border-radius: 12px; object-fit: cover; }
+.song-title { font-size: 13px; flex: 1; }
+.controls button { border: none; background: #f3dbe4; padding: 6px 10px; border-radius: 12px; cursor: pointer; font-size: 12px; transition: background .2s, transform .2s; }
+.controls button:hover { background: #eac6d4; transform: scale(1.05); }
 
 /* favorites sidebar */
 .fav-songs {
-  position:fixed; top:80px; right:-260px; /* hidden by default */
-  width:220px; background:#fff0f6; border-radius:18px;
-  padding:14px; box-shadow:0 12px 30px rgba(0,0,0,0.08); max-height:80vh; overflow-y:auto;
-  transition:right .3s ease;
-  z-index:20;
+  position: fixed; top: 80px; right: 20px; width: 220px; background: #fff0f6; border-radius: 18px;
+  padding: 14px; box-shadow: 0 12px 30px rgba(0,0,0,0.08); max-height: 80vh; overflow-y: auto;
 }
-.fav-songs.show { right:20px; }
-.fav-songs h4 { margin:0 0 10px; font-size:14px; color:#333; text-align:center; }
-.song-item { display:flex; align-items:center; gap:10px; margin-bottom:12px; padding:4px; border-radius:10px; transition: background .2s; cursor:pointer; }
+.fav-songs h4 { margin: 0 0 10px; font-size: 14px; color: #333; text-align: center; }
+.song-item { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding: 4px; border-radius: 10px; transition: background .2s; cursor: pointer; }
 .song-item:hover { background: rgba(255,192,203,0.3); }
-.song-item img { width:42px; height:42px; border-radius:10px; object-fit:cover; }
-.song-item span { font-size:13px; color:#555; flex:1; }
-.song-item button { border:none; background:#f3dbe4; border-radius:8px; padding:4px 6px; cursor:pointer; font-size:12px; transition: background .2s; }
-.song-item button:hover { background:#eac6d4; }
-
-/* favorites toggle button */
-#favToggle { border:none; background:#f3dbe4; border-radius:12px; padding:6px 10px; cursor:pointer; font-size:12px; transition:background .2s, transform .2s; }
-#favToggle:hover { background:#eac6d4; transform:scale(1.05); }
-
-/* responsive adjustments */
-@media(max-width:480px){
-  .container { flex-direction:column; gap:15px; }
-  .sidebar { flex-direction:row; gap:15px; padding-top:20px; overflow-x:auto; }
-  .bg-megan-dani, .bg-collage { display:none; }
-  .actions img { width:28px; }
-}
+.song-item img { width: 42px; height: 42px; border-radius: 10px; object-fit: cover; }
+.song-item span { font-size: 13px; color: #555; flex: 1; }
+.song-item button { border: none; background: #f3dbe4; border-radius: 8px; padding: 4px 6px; cursor: pointer; font-size: 12px; transition: background .2s; }
+.song-item button:hover { background: #eac6d4; }
 </style>
 </head>
 <body>
 
+<!-- background images -->
 <img src="https://i.imgur.com/grTkGiz.jpeg" class="bg-megan-dani">
 <img src="https://i.imgur.com/QvjjJ3A.jpeg" class="bg-collage">
 
 <div class="container">
+  <!-- sidebar -->
   <div class="sidebar">
     <div class="icon-item">
       <img src="https://i.imgur.com/ppsDBw8.png">
@@ -128,6 +116,7 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
     </div>
   </div>
 
+  <!-- post -->
   <div class="card">
     <div class="header">
       <img class="pfp" src="https://i.imgur.com/vvIg9pi.jpeg">
@@ -149,6 +138,7 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
   </div>
 </div>
 
+<!-- fav songs -->
 <div class="fav-songs">
   <h4>fav songs in rotation</h4>
 
@@ -177,6 +167,7 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
   </div>
 </div>
 
+<!-- music player -->
 <div id="musicPlayer">
   <img id="coverImg" src="https://i.imgur.com/izCL2C8.jpeg">
   <div class="song-title" id="songTitle">cookie – NJZ</div>
@@ -184,21 +175,10 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
   <div class="controls">
     <button onclick="playMusic()">play</button>
     <button onclick="pauseMusic()">pause</button>
-    <button id="favToggle">▶ Fav Songs</button>
   </div>
 </div>
 
 <script>
-// dropdown toggle
-document.querySelectorAll('.icon-item').forEach(item => {
-  const dd = item.querySelector('.dropdown');
-  item.addEventListener('click', () => {
-    const visible = dd.style.opacity === '1';
-    document.querySelectorAll('.dropdown').forEach(d => { d.style.opacity='0'; d.style.pointerEvents='none'; });
-    if(!visible){ dd.style.opacity='1'; dd.style.pointerEvents='auto'; }
-  });
-});
-
 // heart toggle
 const likeBtn = document.getElementById("likeBtn");
 likeBtn.addEventListener("click", () => {
@@ -211,8 +191,9 @@ likeBtn.addEventListener("click", () => {
 const music = document.getElementById("bgMusic");
 const coverImg = document.getElementById("coverImg");
 const songTitle = document.getElementById("songTitle");
-function playMusic(){ music.play(); }
-function pauseMusic(){ music.pause(); }
+
+function playMusic() { music.play(); }
+function pauseMusic() { music.pause(); }
 
 // song selection
 document.querySelectorAll(".song-item").forEach(item => {
@@ -220,17 +201,14 @@ document.querySelectorAll(".song-item").forEach(item => {
   playBtn.addEventListener("click", e => { e.stopPropagation(); playSong(item); });
   item.addEventListener("click", () => playSong(item));
 });
-function playSong(item){
+
+function playSong(item) {
   music.src = item.dataset.src;
   songTitle.textContent = item.dataset.title;
   coverImg.src = item.dataset.cover;
   music.play();
 }
-
-// favorites toggle
-const favToggle = document.getElementById('favToggle');
-const favSongs = document.querySelector('.fav-songs');
-favToggle.addEventListener('click', () => { favSongs.classList.toggle('show'); });
 </script>
+
 </body>
 </html>

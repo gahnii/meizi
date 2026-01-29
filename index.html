@@ -53,6 +53,7 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
   position:fixed; bottom:20px; background:#fff; width:380px; border-radius:22px;
   padding:16px; display:flex; flex-direction:column; align-items:center; gap:12px;
   box-shadow:0 12px 30px rgba(0,0,0,.15);
+  transition: all .3s ease;
 }
 #musicTop { display:flex; width:100%; align-items:center; gap:14px; }
 #coverImg { width:56px; height:56px; border-radius:12px; object-fit:cover; }
@@ -61,25 +62,13 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
 .controls button { border:none; background:#f3dbe4; padding:6px 12px; border-radius:12px; cursor:pointer; font-size:12px; transition:background .2s, transform .2s; }
 .controls button:hover { background:#eac6d4; transform:scale(1.05); }
 
-/* fav songs inside music player - animated */
+/* fav songs inside music player */
 #favSongs {
-  max-height:0;
-  opacity:0;
-  overflow:hidden;
-  width:100%;
-  margin-top:0;
-  background:#fff0f6;
-  border-radius:16px;
-  padding:0 10px;
-  box-sizing:border-box;
-  transition: max-height 0.4s ease, opacity 0.4s ease, margin-top 0.4s ease, padding 0.4s ease;
+  display:none; width:100%; max-height:220px; overflow-y:auto;
+  margin-top:0; background:#fff0f6; border-radius:16px; padding:0;
+  transition: all .5s ease;
 }
-#favSongs.show {
-  max-height:220px;
-  opacity:1;
-  margin-top:10px;
-  padding:10px;
-}
+#favSongs.active { display:block; margin-top:10px; padding:10px; }
 #favSongs h4 { margin:0 0 10px; font-size:14px; text-align:center; color:#333; }
 .song-item { display:flex; align-items:center; gap:10px; margin-bottom:10px; padding:4px; border-radius:10px; cursor:pointer; transition: background .2s; }
 .song-item:hover { background:rgba(255,192,203,0.3); }
@@ -103,6 +92,14 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
   #coverImg { width:58px; height:58px; }
   .song-title { font-size:15px; }
   .song-item img { width:44px; height:44px; }
+
+  /* mobile background tweaks */
+  .bg-megan-dani, .bg-collage {
+    width:55%;
+    opacity:0.35;
+  }
+  .bg-megan-dani { top:5%; left:10%; }
+  .bg-collage { bottom:5%; right:5%; }
 }
 </style>
 </head>
@@ -184,25 +181,21 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
   </div>
   <div id="favSongs">
     <h4>fav songs in rotation</h4>
-
     <div class="song-item" data-src="mcookie.mp3" data-title="cookie – NJZ" data-cover="https://i.imgur.com/izCL2C8.jpeg">
       <img src="https://i.imgur.com/izCL2C8.jpeg">
       <span>cookie – NJZ</span>
       <button>▶</button>
     </div>
-
     <div class="song-item" data-src="m365.mp3" data-title="365 – charli xcx" data-cover="https://i.imgur.com/qFkgD9Z.png">
       <img src="https://i.imgur.com/qFkgD9Z.png">
       <span>365 – charli xcx</span>
       <button>▶</button>
     </div>
-
     <div class="song-item" data-src="mblonde.mp3" data-title="the blonde – tv girl" data-cover="https://i.imgur.com/bfql4mS.jpeg">
       <img src="https://i.imgur.com/bfql4mS.jpeg">
       <span>the blonde – tv girl</span>
       <button>▶</button>
     </div>
-
     <div class="song-item" data-src="mamerican.mp3" data-title="american wedding – frank ocean" data-cover="https://i.imgur.com/za6MCuA.png">
       <img src="https://i.imgur.com/za6MCuA.png">
       <span>american wedding – frank ocean</span>
@@ -225,7 +218,6 @@ likeBtn.addEventListener("click", () => {
 const music = document.getElementById("bgMusic");
 const coverImg = document.getElementById("coverImg");
 const songTitle = document.getElementById("songTitle");
-
 function playMusic(){ music.play(); }
 function pauseMusic(){ music.pause(); }
 
@@ -242,11 +234,20 @@ function playSong(item){
   music.play();
 }
 
-// toggle fav songs with smooth animation
-const favToggle = document.getElementById("favToggle");
-const favSongs = document.getElementById("favSongs");
-favToggle.addEventListener("click", () => {
-  favSongs.classList.toggle("show");
+// toggle fav songs with animation
+const favToggle=document.getElementById("favToggle");
+const favSongs=document.getElementById("favSongs");
+favToggle.addEventListener("click",()=>{
+  if(favSongs.classList.contains("active")){
+    favSongs.style.height=favSongs.scrollHeight+"px"; // set current height
+    requestAnimationFrame(()=>{ favSongs.style.height="0px"; });
+    favSongs.addEventListener("transitionend",()=>{ favSongs.classList.remove("active"); favSongs.style.height=""; }, {once:true});
+  } else {
+    favSongs.classList.add("active");
+    favSongs.style.height="0px";
+    requestAnimationFrame(()=>{ favSongs.style.height=favSongs.scrollHeight+"px"; });
+    favSongs.addEventListener("transitionend",()=>{ favSongs.style.height=""; }, {once:true});
+  }
 });
 </script>
 

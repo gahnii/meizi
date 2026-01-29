@@ -61,8 +61,25 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
 .controls button { border:none; background:#f3dbe4; padding:6px 12px; border-radius:12px; cursor:pointer; font-size:12px; transition:background .2s, transform .2s; }
 .controls button:hover { background:#eac6d4; transform:scale(1.05); }
 
-/* fav songs inside music player */
-#favSongs { display:none; width:100%; max-height:220px; overflow-y:auto; margin-top:10px; background:#fff0f6; border-radius:16px; padding:10px; }
+/* fav songs inside music player - animated */
+#favSongs {
+  max-height:0;
+  opacity:0;
+  overflow:hidden;
+  width:100%;
+  margin-top:0;
+  background:#fff0f6;
+  border-radius:16px;
+  padding:0 10px;
+  box-sizing:border-box;
+  transition: max-height 0.4s ease, opacity 0.4s ease, margin-top 0.4s ease, padding 0.4s ease;
+}
+#favSongs.show {
+  max-height:220px;
+  opacity:1;
+  margin-top:10px;
+  padding:10px;
+}
 #favSongs h4 { margin:0 0 10px; font-size:14px; text-align:center; color:#333; }
 .song-item { display:flex; align-items:center; gap:10px; margin-bottom:10px; padding:4px; border-radius:10px; cursor:pointer; transition: background .2s; }
 .song-item:hover { background:rgba(255,192,203,0.3); }
@@ -225,10 +242,12 @@ function playSong(item){
   music.play();
 }
 
-// toggle fav songs
-const favToggle=document.getElementById("favToggle");
-const favSongs=document.getElementById("favSongs");
-favToggle.addEventListener("click",()=>{ favSongs.style.display = favSongs.style.display==="block"?"none":"block"; });
+// toggle fav songs with smooth animation
+const favToggle = document.getElementById("favToggle");
+const favSongs = document.getElementById("favSongs");
+favToggle.addEventListener("click", () => {
+  favSongs.classList.toggle("show");
+});
 </script>
 
 </body>

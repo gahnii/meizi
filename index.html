@@ -8,45 +8,23 @@
 * { box-sizing:border-box; font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin:0; padding:0; }
 body { background:#fdeff4; display:flex; flex-direction:column; align-items:center; padding:40px 0 160px; overflow-x:hidden; }
 
-/* ===================== */
-/* VISUALIZER BG */
-/* ===================== */
-#visualizer {
-  position: fixed;
-  left: 50%;
-  bottom: 100px;
-  transform: translateX(-50%);
-  width: 400px;
-  height: 400px;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.6;
+/* Lyrics display */
+#lyricsDisplay {
+  width:380px;
+  text-align:center;
+  margin-bottom:8px;
+  font-size:15px;
+  font-weight:600;
+  color:#ffb6c1; /* pinkish-white */
+  min-height:22px;
 }
 
-/* background images */
-.bg-megan-dani, .bg-collage {
-  position:fixed;
-  width:22%;
-  opacity:0.2;
-  filter:blur(2px) brightness(1.05);
-  z-index:-2;
-}
-.bg-megan-dani { top:15%; left:12%; }
-.bg-collage { bottom:12%; right:10%; }
+/* main container */
+.container { width:100%; max-width:1000px; display:flex; justify-content:center; }
+.content-block { display:flex; align-items:flex-start; gap:16px; }
 
 /* sidebar icons */
-.sidebar {
-  display:flex;
-  flex-direction:column;
-  gap:22px;
-  padding-top:60px;
-  align-items:flex-start;
-  position: fixed;
-  left: 40px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-}
+.sidebar { display:flex; flex-direction:column; gap:22px; padding-top:60px; align-items:flex-start; }
 .sidebar .icon-item img { width:26px; opacity:0.75; cursor:pointer; transition: transform .2s, opacity .2s; }
 .sidebar .icon-item img:hover { transform:scale(1.15); opacity:1; }
 .dropdown {
@@ -58,10 +36,8 @@ body { background:#fdeff4; display:flex; flex-direction:column; align-items:cent
 .dropdown strong { font-weight:500; color:#333; }
 .icon-item:hover .dropdown { opacity:1; pointer-events:auto; }
 
-/* main container & card */
-.container { width:100%; max-width:1000px; display:flex; justify-content:center; margin-bottom:30px; }
-.content-block { display:flex; justify-content:center; gap:16px; }
-.card { width:440px; background:#fff7fa; border-radius:28px; padding:24px; box-shadow:0 12px 30px rgba(0,0,0,.08); z-index:5; }
+/* post card */
+.card { width:440px; background:#fff7fa; border-radius:28px; padding:24px; box-shadow:0 12px 30px rgba(0,0,0,.08); margin-bottom:20px; }
 .header { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
 .pfp { width:42px; height:42px; border-radius:50%; object-fit:cover; }
 .username { font-weight:600; }
@@ -74,10 +50,8 @@ body { background:#fdeff4; display:flex; flex-direction:column; align-items:cent
 
 /* music player */
 #musicPlayer {
-  position:fixed;
-  bottom:20px;
-  background:#fff;
   width:380px;
+  background:#fff;
   border-radius:22px;
   padding:16px;
   display:flex;
@@ -85,7 +59,6 @@ body { background:#fdeff4; display:flex; flex-direction:column; align-items:cent
   align-items:center;
   gap:12px;
   box-shadow:0 12px 30px rgba(0,0,0,.15);
-  z-index:10;
 }
 #musicTop { display:flex; width:100%; align-items:center; gap:14px; }
 #coverImg { width:56px; height:56px; border-radius:12px; object-fit:cover; }
@@ -94,7 +67,7 @@ body { background:#fdeff4; display:flex; flex-direction:column; align-items:cent
 .controls button { border:none; background:#f3dbe4; padding:6px 12px; border-radius:12px; cursor:pointer; font-size:12px; transition:background .2s, transform .2s; }
 .controls button:hover { background:#eac6d4; transform:scale(1.05); }
 
-/* fav songs */
+/* fav songs inside music player */
 #favSongs {
   display:none; width:100%; max-height:220px; overflow-y:auto;
   margin-top:0; background:#fff0f6; border-radius:16px; padding:0;
@@ -109,75 +82,66 @@ body { background:#fdeff4; display:flex; flex-direction:column; align-items:cent
 .song-item button { border:none; background:#f3dbe4; border-radius:8px; padding:4px 6px; cursor:pointer; font-size:12px; transition:background .2s; }
 .song-item button:hover { background:#eac6d4; }
 
-/* fav toggle */
+/* fav toggle button */
 #favToggle { background:#f3dbe4; border:none; border-radius:12px; padding:4px 8px; cursor:pointer; font-size:12px; transition:background .2s; }
 #favToggle:hover { background:#eac6d4; }
 
 /* responsive */
 @media(max-width:600px){
-  .container { flex-direction:column; }
   .content-block { flex-direction:column; align-items:center; gap:20px; }
-  .sidebar { flex-direction:row; justify-content:center; width:100%; padding-top:10px; gap:14px; position:relative; transform:none; top:auto; left:auto; }
-  .card { width:95%; padding:18px; border-radius:22px; margin-top:10px; }
+  .sidebar { flex-direction:row; justify-content:center; width:100%; padding-top:10px; gap:14px; }
+  .card { width:95%; padding:18px; border-radius:22px; }
   .pfp { width:50px; height:50px; }
   .actions img { width:26px; }
   #musicPlayer { width:95%; padding:16px; }
   #coverImg { width:58px; height:58px; }
   .song-title { font-size:15px; }
   .song-item img { width:44px; height:44px; }
-
-  #visualizer { width:250px; height:250px; bottom:140px; }
 }
 </style>
 </head>
 <body>
 
-<!-- visualizer -->
-<canvas id="visualizer"></canvas>
-
-<!-- background images -->
-<img src="https://i.imgur.com/grTkGiz.jpeg" class="bg-megan-dani">
-<img src="https://i.imgur.com/QvjjJ3A.jpeg" class="bg-collage">
-
-<!-- sidebar -->
-<div class="sidebar">
-  <div class="icon-item">
-    <img src="https://i.imgur.com/ppsDBw8.png">
-    <div class="dropdown">
-      <strong>stanlist</strong><br>
-      katseye, njz, aespa, illit, loona, le sserafim, ive, itzy, twice, bp
-      <br><br>
-      <strong>music</strong><br>
-      ariana grande, tate mcrae, marina, charli xcx, lana del rey, beyoncé,
-      billie eilish, olivia rodrigo, madison beer, rihanna, sza
-    </div>
-  </div>
-  <div class="icon-item">
-    <img src="https://i.imgur.com/TbwM51x.png">
-    <div class="dropdown">
-      <strong>likes</strong><br>
-      atla, one piece, naruto, jujutsu kaisen, gossip girl, riverdale, euphoria,
-      stranger things, umbrella academy, gilmore girls, the witcher, marvel, disney
-      <br><br>
-      <strong>friends</strong><br>
-      bella, kaela, turle, riri, ray, byeol, dan, maisha, boki, dani, nat,
-      xures, demi, emi, maxi, angel, miko, beso, ellie, enzo, more
-    </div>
-  </div>
-  <div class="icon-item">
-    <img src="https://i.imgur.com/NWxe1eJ.png">
-    <div class="dropdown">
-      <strong>mari</strong><br>
-      female, 15<br>
-      arab , brazilian<br>
-      muslim
-    </div>
-  </div>
-</div>
-
 <!-- main container -->
 <div class="container">
   <div class="content-block">
+
+    <!-- sidebar -->
+    <div class="sidebar">
+      <div class="icon-item">
+        <img src="https://i.imgur.com/ppsDBw8.png">
+        <div class="dropdown">
+          <strong>stanlist</strong><br>
+          katseye, njz, aespa, illit, loona, le sserafim, ive, itzy, twice, bp
+          <br><br>
+          <strong>music</strong><br>
+          ariana grande, tate mcrae, marina, charli xcx, lana del rey, beyoncé,
+          billie eilish, olivia rodrigo, madison beer, rihanna, sza
+        </div>
+      </div>
+      <div class="icon-item">
+        <img src="https://i.imgur.com/TbwM51x.png">
+        <div class="dropdown">
+          <strong>likes</strong><br>
+          atla, one piece, naruto, jujutsu kaisen, gossip girl, riverdale, euphoria,
+          stranger things, umbrella academy, gilmore girls, the witcher, marvel, disney
+          <br><br>
+          <strong>friends</strong><br>
+          bella, kaela, turle, riri, ray, byeol, dan, maisha, boki, dani, nat,
+          xures, demi, emi, maxi, angel, miko, beso, ellie, enzo, more
+        </div>
+      </div>
+      <div class="icon-item">
+        <img src="https://i.imgur.com/NWxe1eJ.png">
+        <div class="dropdown">
+          <strong>mari</strong><br>
+          female, 15<br>
+          arab , brazilian<br>
+          muslim
+        </div>
+      </div>
+    </div>
+
     <!-- post card -->
     <div class="card">
       <div class="header">
@@ -195,8 +159,12 @@ body { background:#fdeff4; display:flex; flex-direction:column; align-items:cent
       </div>
       <div class="caption">'its okay to admit ur jealous of me'</div>
     </div>
+
   </div>
 </div>
+
+<!-- lyrics visualizer -->
+<div id="lyricsDisplay"></div>
 
 <!-- music player -->
 <div id="musicPlayer">
@@ -262,6 +230,7 @@ function playSong(item){
   songTitle.textContent=item.dataset.title;
   coverImg.src=item.dataset.cover;
   music.play();
+  loadLyrics(item.dataset.src);
 }
 
 // toggle fav songs
@@ -280,81 +249,52 @@ favToggle.addEventListener("click",()=>{
   }
 });
 
-// ===============================
-// AUDIO VISUALIZER
-// ===============================
-const canvas = document.getElementById("visualizer");
-const ctx = canvas.getContext("2d");
-canvas.width = canvas.clientWidth;
-canvas.height = canvas.clientHeight;
-const cx = canvas.width/2;
-const cy = canvas.height/2;
-const radius = 70;
-const dotCount = 60;
-let angles = Array.from({length:dotCount}, (_,i)=>Math.random()*Math.PI*2);
+// =====================
+// Lyrics data
+// =====================
+const lyricsData = {
+  "mcookie.mp3":[
+    { time:0, text:"I‑yah" },
+    { time:2, text:"내가 만든 쿠키" },
+    { time:5, text:"너를 위해 구웠지, but you know that it ain't for free, yeah" },
+    { time:10, text:"내가 만든 쿠키" },
+    { time:13, text:"너무 부드러우니 (what?) 자꾸만 떠오르니 (ayy)" },
+    { time:17, text:"널 choco'-chip 으로 sprinkle로 입맛 버리게 만들고 싶어" },
+    { time:22, text:"숨기고 있지만 널 더 보고 싶어" },
+    { time:26, text:"If you want it, you can get it, if you want it" },
+    { time:30, text:"네 목소리를 또 들려줘, boy" },
+    { time:34, text:"식사는 없어 배고파도" },
+    { time:37, text:"음료는 없어 목말라도" },
+    { time:41, text:"달콤한 맛만 디저트만 만 원하게 될 거 알잖아" },
+    { time:45, text:"식사는 없어 배고파도" },
+    { time:48, text:"음료는 없어 목말라도" },
+    { time:52, text:"달콤한 맛만 디저트만 만 원하게 될 거 알잖아" },
+    { time:57, text:"내가 만든 쿠키" }
+  ],
+  "m365.mp3":[], "mblonde.mp3":[], "mamerican.mp3":[]
+};
 
-// audio context
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioCtx = new AudioContext();
-const analyser = audioCtx.createAnalyser();
-analyser.fftSize = 256;
-const source = audioCtx.createMediaElementSource(music);
-source.connect(analyser);
-analyser.connect(audioCtx.destination);
-const bufferLength = analyser.frequencyBinCount;
-const freqData = new Uint8Array(bufferLength);
-const timeData = new Uint8Array(bufferLength);
+// =====================
+// Lyrics functionality
+// =====================
+const lyricsDisplay = document.getElementById("lyricsDisplay");
+let activeLyrics = [], lyricIndex = 0;
 
-// initialize dummy values
-timeData.fill(128);
-freqData.fill(64);
-
-function draw(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  // waveform spiral
-  ctx.beginPath();
-  for(let i=0;i<timeData.length;i++){
-    const angle = (i/timeData.length)*Math.PI*2 - Math.PI/2;
-    const r = radius + (timeData[i]-128)/2;
-    const x = cx + Math.cos(angle)*r;
-    const y = cy + Math.sin(angle)*r;
-    if(i===0) ctx.moveTo(x,y);
-    else ctx.lineTo(x,y);
-  }
-  ctx.strokeStyle = 'rgba(255,182,193,0.7)'; // pinkish-white spiral
-  ctx.lineWidth = 2;
-  ctx.shadowBlur = 10;
-  ctx.shadowColor = 'rgba(255,182,193,0.5)';
-  ctx.stroke();
-
-  // orbiting dots
-  for(let i=0;i<dotCount;i++){
-    angles[i] += 0.01 + freqData[i]/2000;
-    const amp = freqData[i]/2;
-    const x = cx + Math.cos(angles[i])*(radius + amp);
-    const y = cy + Math.sin(angles[i])*(radius + amp);
-    ctx.beginPath();
-    ctx.arc(x,y,4,0,Math.PI*2);
-    ctx.fillStyle = `rgba(255,105,180,0.8)`; // lighter pink dots
-    ctx.shadowBlur = 6;
-    ctx.shadowColor = `rgba(255,105,180,0.5)`;
-    ctx.fill();
-  }
-
-  requestAnimationFrame(draw);
+function loadLyrics(src){
+  activeLyrics = lyricsData[src] || [];
+  lyricIndex = 0;
 }
-draw();
 
-// update visualizer with audio when playing
-function updateAudioData(){
-  analyser.getByteTimeDomainData(timeData);
-  analyser.getByteFrequencyData(freqData);
-  requestAnimationFrame(updateAudioData);
+function updateLyrics(){
+  const currentTime = music.currentTime;
+  if(lyricIndex < activeLyrics.length && currentTime >= activeLyrics[lyricIndex].time){
+    lyricsDisplay.textContent = activeLyrics[lyricIndex].text;
+    lyricIndex++;
+  }
+  requestAnimationFrame(updateLyrics);
 }
-music.addEventListener('play',()=>{
-  if(audioCtx.state==='suspended') audioCtx.resume();
-  updateAudioData();
+music.addEventListener("play",()=>{
+  requestAnimationFrame(updateLyrics);
 });
 </script>
 

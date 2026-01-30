@@ -14,13 +14,13 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
 #visualizer {
   position: fixed;
   left: 50%;
-  bottom: 20px;
+  bottom: 80px; /* lower than before */
   transform: translateX(-50%);
-  width: 500px;
-  height: 500px;
+  width: 400px; /* smaller */
+  height: 400px; /* smaller */
   z-index: -1;
   pointer-events: none;
-  opacity: 0.6;
+  opacity: 0.9;
 }
 
 /* background images */
@@ -95,7 +95,7 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
 #favSongs.active { display:block; margin-top:10px; padding:10px; }
 #favSongs h4 { margin:0 0 10px; font-size:14px; text-align:center; color:#333; }
 .song-item { display:flex; align-items:center; gap:10px; margin-bottom:10px; padding:4px; border-radius:10px; cursor:pointer; transition: background .2s; }
-.song-item:hover { background:rgba(255,192,203,0.3); }
+.song-item:hover { background:rgba(255,182,193,0.3); }
 .song-item img { width:42px; height:42px; border-radius:10px; object-fit:cover; }
 .song-item span { font-size:13px; flex:1; color:#555; }
 .song-item button { border:none; background:#f3dbe4; border-radius:8px; padding:4px 6px; cursor:pointer; font-size:12px; transition:background .2s; }
@@ -117,16 +117,12 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
   .song-title { font-size:15px; }
   .song-item img { width:44px; height:44px; }
 
-  /* mobile background tweaks */
-  .bg-megan-dani, .bg-collage {
-    width:55%;
-    opacity:0.35;
-  }
-  .bg-megan-dani { top:5%; left:10%; }
-  .bg-collage { bottom:5%; right:5%; }
-
-  #visualizer { width:300px; height:300px; bottom:100px; } /* smaller on mobile, above music player */
+  /* mobile visualizer smaller & above music player */
+  #visualizer { width:250px; height:250px; bottom:160px; }
 }
+
+/* ===================== */
+/* end styles */
 </style>
 </head>
 <body>
@@ -261,7 +257,7 @@ function playSong(item){
   music.play();
 }
 
-// toggle fav songs with animation
+// toggle fav songs
 const favToggle=document.getElementById("favToggle");
 const favSongs=document.getElementById("favSongs");
 favToggle.addEventListener("click",()=>{
@@ -302,7 +298,7 @@ const bufferLength = analyser.frequencyBinCount;
 const freqData = new Uint8Array(bufferLength);
 const timeData = new Uint8Array(bufferLength);
 
-// initialize dummy values so waveform and dots appear at start
+// initialize dummy values for waveform and dots
 timeData.fill(128);
 freqData.fill(64);
 
@@ -319,8 +315,10 @@ function draw(){
     if(i===0) ctx.moveTo(x,y);
     else ctx.lineTo(x,y);
   }
-  ctx.strokeStyle = 'rgba(180, 220, 255, 0.7)';
+  ctx.strokeStyle = 'rgba(180, 220, 255, 0.9)'; // spiral color
   ctx.lineWidth = 2;
+  ctx.shadowBlur = 12;
+  ctx.shadowColor = 'rgba(180, 220, 255, 0.5)';
   ctx.stroke();
 
   // orbiting dots
@@ -331,9 +329,9 @@ function draw(){
     const y = cy + Math.sin(angles[i])*(radius + amp);
     ctx.beginPath();
     ctx.arc(x,y,4,0,Math.PI*2);
-    ctx.fillStyle = `rgba(255,182,193,0.8)`;
-    ctx.shadowBlur = 6;
-    ctx.shadowColor = `rgba(255,182,193,0.5)`;
+    ctx.fillStyle = `rgba(255,182,193,0.9)`; // pink dots
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = `rgba(255,182,193,0.6)`;
     ctx.fill();
   }
 

@@ -16,9 +16,9 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
   position: fixed;
   bottom:80px; /* above music player */
   left:50%;
-  transform:translateX(-50%);
-  width:520px; /* longer width to match music player */
-  height:80px; /* keep same height */
+  transform: translateX(-50%); /* fully centered */
+  width:380px; /* same as music player */
+  height:80px;
   pointer-events:none;
   opacity:0.85;
   z-index:5;
@@ -125,11 +125,12 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
   .bg-megan-dani { top:5%; left:10%; }
   .bg-collage { bottom:5%; right:5%; }
 
-  /* visualizer adjustments for mobile */
+  /* visualizer fully centered and match player width */
   #visualizer {
-    bottom:100px; /* raised above music player */
+    bottom:100px; 
     left:50%; 
-    width:95%; /* stretch full width */
+    transform:translateX(-50%);
+    width:95%; 
     height:80px;
   }
 }
@@ -308,7 +309,7 @@ music.addEventListener("play", () => {
 });
 
 function resize(){
-  canvas.width = 520; /* match new width */
+  canvas.width = 380; /* match music player */
   canvas.height = 80;
 }
 window.addEventListener("resize", resize);

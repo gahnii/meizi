@@ -14,14 +14,14 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
 /* ===================== */
 #visualizer {
   position: fixed;
-  bottom: 170px; /* above music player */
-  left: 52%; /* slightly to the right */
-  transform: translateX(-50%);
-  width: 380px; /* match music player width */
-  height: 50px;
-  pointer-events: none;
-  opacity: 0.85;
-  z-index: 5;
+  bottom:80px; /* above music player */
+  left:55%; /* slightly right */
+  transform:translateX(-50%);
+  width:450px; /* slightly wider */
+  height:80px; /* taller for better visual effect */
+  pointer-events:none;
+  opacity:0.85;
+  z-index:5;
 }
 
 /* background images */
@@ -77,7 +77,6 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
   flex-direction:column;
   align-items:center;
   gap:12px;
-  box-shadow:0 12px 30px rgba(0,0,0,.15);
 }
 #musicTop { display:flex; width:100%; align-items:center; gap:14px; }
 #coverImg { width:56px; height:56px; border-radius:12px; object-fit:cover; }
@@ -87,7 +86,6 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
 .controls button { border:none; background:#f3dbe4; padding:6px 12px; border-radius:12px; cursor:pointer; font-size:12px; transition:background .2s, transform .2s; }
 .controls button:hover { background:#eac6d4; transform:scale(1.05); }
 
-/* fav songs inside music player */
 #favSongs {
   display:none; width:100%; max-height:220px; overflow-y:auto;
   margin-top:0; background:#fff0f6; border-radius:16px; padding:0;
@@ -102,7 +100,6 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
 .song-item button { border:none; background:#f3dbe4; border-radius:8px; padding:4px 6px; cursor:pointer; font-size:12px; transition:background .2s; }
 .song-item button:hover { background:#eac6d4; }
 
-/* fav toggle button */
 #favToggle { background:#f3dbe4; border:none; border-radius:12px; padding:4px 8px; cursor:pointer; font-size:12px; transition:background .2s; }
 #favToggle:hover { background:#eac6d4; }
 
@@ -124,6 +121,14 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
   }
   .bg-megan-dani { top:5%; left:10%; }
   .bg-collage { bottom:5%; right:5%; }
+
+  /* visualizer adjustments for mobile */
+  #visualizer {
+    bottom:70px;
+    left:52%; /* slight right shift */
+    width:95%;
+    height:70px; /* taller but smaller than desktop */
+  }
 }
 </style>
 </head>
@@ -300,8 +305,8 @@ music.addEventListener("play", () => {
 });
 
 function resize(){
-  canvas.width = 380; /* match player width */
-  canvas.height = 50; /* height of visualizer */
+  canvas.width = 450; /* visualizer width */
+  canvas.height = 80; /* taller for better visual */
 }
 window.addEventListener("resize", resize);
 resize();
@@ -314,7 +319,7 @@ function draw(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   const barW = canvas.width / data.length;
   data.forEach((v,i)=>{
-    const h = v; // fit in 50px height
+    const h = v;
     ctx.fillStyle = "rgba(255, 105, 180, 0.6)";
     ctx.shadowBlur = 12;
     ctx.shadowColor = "rgba(255,105,180,0.5)";

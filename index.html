@@ -15,10 +15,10 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
 #visualizer {
   position: fixed;
   bottom:80px; /* above music player */
-  left:55%; /* slightly right */
+  left:50%;
   transform:translateX(-50%);
-  width:450px; /* slightly wider */
-  height:80px; /* taller for better visual effect */
+  width:520px; /* longer width to match music player */
+  height:80px; /* keep same height */
   pointer-events:none;
   opacity:0.85;
   z-index:5;
@@ -59,9 +59,12 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
 .username { font-weight:600; }
 .time { font-size:12px; color:#999; }
 .post-img { width:100%; border-radius:20px; margin:10px 0; object-fit:cover; }
-.caption { font-size:14px; margin-top:6px; }
 
-.actions { display:flex; gap:16px; margin-top:10px; }
+/* caption above buttons */
+.caption { font-size:14px; margin-bottom:10px; }
+
+/* interactive buttons at bottom */
+.actions { display:flex; gap:16px; }
 .actions img { width:22px; cursor:pointer; transition: transform .2s, filter .2s; }
 .actions img:hover { transform:scale(1.2); filter:brightness(1.2); }
 
@@ -125,9 +128,9 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
   /* visualizer adjustments for mobile */
   #visualizer {
     bottom:100px; /* raised above music player */
-    left:50%; /* center aligned */
-    width:90%; /* wider to match player/fav button width */
-    height:70px; /* slightly shorter than desktop */
+    left:50%; 
+    width:95%; /* stretch full width */
+    height:80px;
   }
 }
 </style>
@@ -190,12 +193,12 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
         </div>
       </div>
       <img class="post-img" src="https://i.imgur.com/kZMMBCC.jpeg">
+      <div class="caption">'its okay to admit ur jealous of me'</div>
       <div class="actions">
         <img id="likeBtn" src="https://cdn-icons-png.flaticon.com/512/833/833300.png">
         <img src="https://cdn-icons-png.flaticon.com/512/1380/1380338.png">
         <img src="https://cdn-icons-png.flaticon.com/512/786/786205.png">
       </div>
-      <div class="caption">'its okay to admit ur jealous of me'</div>
     </div>
   </div>
 </div>
@@ -305,8 +308,8 @@ music.addEventListener("play", () => {
 });
 
 function resize(){
-  canvas.width = 450; /* visualizer width */
-  canvas.height = 80; /* taller for better visual */
+  canvas.width = 520; /* match new width */
+  canvas.height = 80;
 }
 window.addEventListener("resize", resize);
 resize();

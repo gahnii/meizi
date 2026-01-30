@@ -4,151 +4,279 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>meizini</title>
+
 <style>
-* { box-sizing:border-box; font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin:0; padding:0; }
-body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 160px; overflow-x:hidden; }
+* {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #fdeff4;
+  display: flex;
+  justify-content: center;
+  padding: 40px 0 160px;
+  overflow-x: hidden;
+}
 
 /* background images */
-.bg-megan-dani, .bg-collage {
-  position:fixed;
-  width:22%;
-  opacity:0.2;
-  filter:blur(2px) brightness(1.05);
-  z-index:-1;
+.bg-megan-dani,
+.bg-collage {
+  position: fixed;
+  width: 22%;
+  opacity: 0.2;
+  filter: blur(2px) brightness(1.05);
+  z-index: -1;
 }
-.bg-megan-dani { top:15%; left:12%; }
-.bg-collage { bottom:12%; right:10%; }
+.bg-megan-dani { top: 15%; left: 12%; }
+.bg-collage { bottom: 12%; right: 10%; }
 
-/* container & content block */
-.container { width:100%; max-width:1000px; display:flex; justify-content:center; }
-.content-block { display:flex; align-items:flex-start; gap:16px; }
+/* container */
+.container {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  justify-content: center;
+}
 
-/* sidebar icons */
-.sidebar { display:flex; flex-direction:column; gap:22px; padding-top:60px; align-items:flex-start; }
-.sidebar .icon-item img { width:26px; opacity:0.75; cursor:pointer; transition: transform .2s, opacity .2s; }
-.sidebar .icon-item img:hover { transform:scale(1.15); opacity:1; }
+.content-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* sidebar */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding-top: 60px;
+}
+
+.sidebar img {
+  width: 26px;
+  opacity: 0.75;
+  cursor: pointer;
+  transition: transform .2s, opacity .2s;
+}
+.sidebar img:hover {
+  transform: scale(1.15);
+  opacity: 1;
+}
+
 .dropdown {
-  position:absolute; left:40px; top:50%; transform:translateY(-50%);
-  background:#fff; border-radius:14px; padding:14px 16px; width:240px;
-  font-size:13px; color:#555; box-shadow:0 10px 25px rgba(0,0,0,0.08);
-  opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:10;
+  position: absolute;
+  left: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px 16px;
+  width: 240px;
+  font-size: 13px;
+  color: #555;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+  z-index: 10;
 }
-.dropdown strong { font-weight:500; color:#333; }
-.icon-item:hover .dropdown { opacity:1; pointer-events:auto; }
+.dropdown strong { color: #333; font-weight: 500; }
+.icon-item:hover .dropdown {
+  opacity: 1;
+  pointer-events: auto;
+}
 
 /* post card */
-.card { width:440px; background:#fff7fa; border-radius:28px; padding:24px; box-shadow:0 12px 30px rgba(0,0,0,.08); }
-.header { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
-.pfp { width:42px; height:42px; border-radius:50%; object-fit:cover; }
-.username { font-weight:600; }
-.time { font-size:12px; color:#999; }
-.post-img { width:100%; border-radius:20px; margin:10px 0; object-fit:cover; }
-.caption { font-size:14px; margin-top:6px; }
-.actions { display:flex; gap:16px; margin-top:10px; }
-.actions img { width:22px; cursor:pointer; transition: transform .2s, filter .2s; }
-.actions img:hover { transform:scale(1.2); filter:brightness(1.2); }
+.card {
+  width: 440px;
+  background: #fff7fa;
+  border-radius: 28px;
+  padding: 24px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.08);
+}
+
+.header {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.pfp {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.username { font-weight: 600; }
+.time { font-size: 12px; color: #999; }
+
+.post-img {
+  width: 100%;
+  border-radius: 20px;
+  margin: 10px 0;
+  object-fit: cover;
+}
+
+.actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+}
+.actions img {
+  width: 22px;
+  cursor: pointer;
+  transition: transform .2s, filter .2s;
+}
+.actions img:hover {
+  transform: scale(1.2);
+  filter: brightness(1.2);
+}
+
+.caption {
+  font-size: 14px;
+  margin-top: 6px;
+}
 
 /* music player */
 #musicPlayer {
-  position:fixed; bottom:20px; background:#fff; width:380px; border-radius:22px;
-  padding:16px; display:flex; flex-direction:column; align-items:center; gap:12px;
-  box-shadow:0 12px 30px rgba(0,0,0,.15);
-  transition: all .3s ease;
+  position: fixed;
+  bottom: 20px;
+  background: #fff;
+  width: 380px;
+  border-radius: 22px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.15);
 }
-#musicTop { display:flex; width:100%; align-items:center; gap:14px; }
-#coverImg { width:56px; height:56px; border-radius:12px; object-fit:cover; }
-.song-title { font-size:14px; flex:1; }
-.controls { display:flex; gap:10px; }
-.controls button { border:none; background:#f3dbe4; padding:6px 12px; border-radius:12px; cursor:pointer; font-size:12px; transition:background .2s, transform .2s; }
-.controls button:hover { background:#eac6d4; transform:scale(1.05); }
 
-/* fav songs inside music player */
+#musicTop {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+#coverImg {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.song-title {
+  flex: 1;
+  font-size: 14px;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+}
+.controls button {
+  border: none;
+  background: #f3dbe4;
+  padding: 6px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background .2s, transform .2s;
+}
+.controls button:hover {
+  background: #eac6d4;
+  transform: scale(1.05);
+}
+
+/* fav songs */
 #favSongs {
-  display:none; width:100%; max-height:220px; overflow-y:auto;
-  margin-top:0; background:#fff0f6; border-radius:16px; padding:0;
-  transition: all .5s ease;
+  display: none;
+  background: #fff0f6;
+  border-radius: 16px;
+  padding: 10px;
+  max-height: 220px;
+  overflow-y: auto;
 }
-#favSongs.active { display:block; margin-top:10px; padding:10px; }
-#favSongs h4 { margin:0 0 10px; font-size:14px; text-align:center; color:#333; }
-.song-item { display:flex; align-items:center; gap:10px; margin-bottom:10px; padding:4px; border-radius:10px; cursor:pointer; transition: background .2s; }
-.song-item:hover { background:rgba(255,192,203,0.3); }
-.song-item img { width:42px; height:42px; border-radius:10px; object-fit:cover; }
-.song-item span { font-size:13px; flex:1; color:#555; }
-.song-item button { border:none; background:#f3dbe4; border-radius:8px; padding:4px 6px; cursor:pointer; font-size:12px; transition:background .2s; }
-.song-item button:hover { background:#eac6d4; }
+#favSongs.active { display: block; }
 
-/* fav toggle button */
-#favToggle { background:#f3dbe4; border:none; border-radius:12px; padding:4px 8px; cursor:pointer; font-size:12px; transition:background .2s; }
-#favToggle:hover { background:#eac6d4; }
+.song-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.song-item img {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+}
+.song-item span {
+  flex: 1;
+  font-size: 13px;
+}
 
-/* responsive */
-@media(max-width:600px){
-  .content-block { flex-direction:column; align-items:center; gap:20px; }
-  .sidebar { flex-direction:row; justify-content:center; width:100%; padding-top:10px; gap:14px; }
-  .card { width:95%; padding:18px; border-radius:22px; margin-top:10px; }
-  .pfp { width:50px; height:50px; }
-  .actions img { width:26px; }
-  #musicPlayer { width:95%; padding:16px; }
-  #coverImg { width:58px; height:58px; }
-  .song-title { font-size:15px; }
-  .song-item img { width:44px; height:44px; }
+/* MOBILE ONLY FIXES */
+@media (max-width:600px) {
 
-  /* mobile background tweaks */
-  .bg-megan-dani, .bg-collage {
-    width:55%;
-    opacity:0.35;
+  .content-block {
+    flex-direction: column;
+    align-items: center;
   }
-  .bg-megan-dani { top:5%; left:10%; }
-  .bg-collage { bottom:5%; right:5%; }
+
+  .sidebar {
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    padding-top: 32px;     /* moved DOWN */
+    margin-bottom: 6px;   /* closer to card */
+    gap: 14px;
+  }
+
+  .card {
+    width: 95%;
+    margin-top: 0;        /* removes extra gap */
+    padding: 18px;
+  }
+
+  #musicPlayer {
+    width: 95%;
+  }
+
+  /* mobile background visibility */
+  .bg-megan-dani,
+  .bg-collage {
+    width: 55%;
+    opacity: 0.35;
+  }
+  .bg-megan-dani { top: 5%; left: 10%; }
+  .bg-collage { bottom: 5%; right: 5%; }
 }
 </style>
 </head>
-<body>
 
-<!-- background -->
+<body>
 <img src="https://i.imgur.com/grTkGiz.jpeg" class="bg-megan-dani">
 <img src="https://i.imgur.com/QvjjJ3A.jpeg" class="bg-collage">
 
-<!-- main container -->
 <div class="container">
   <div class="content-block">
-    <!-- sidebar -->
+
     <div class="sidebar">
       <div class="icon-item">
         <img src="https://i.imgur.com/ppsDBw8.png">
-        <div class="dropdown">
-          <strong>stanlist</strong><br>
-          katseye, njz, aespa, illit, loona, le sserafim, ive, itzy, twice, bp
-          <br><br>
-          <strong>music</strong><br>
-          ariana grande, tate mcrae, marina, charli xcx, lana del rey, beyoncé,
-          billie eilish, olivia rodrigo, madison beer, rihanna, sza
-        </div>
+        <div class="dropdown">stanlist + music</div>
       </div>
       <div class="icon-item">
         <img src="https://i.imgur.com/TbwM51x.png">
-        <div class="dropdown">
-          <strong>likes</strong><br>
-          atla, one piece, naruto, jujutsu kaisen, gossip girl, riverdale, euphoria,
-          stranger things, umbrella academy, gilmore girls, the witcher, marvel, disney
-          <br><br>
-          <strong>friends</strong><br>
-          bella, kaela, turle, riri, ray, byeol, dan, maisha, boki, dani, nat,
-          xures, demi, emi, maxi, angel, miko, beso, ellie, enzo, more
-        </div>
+        <div class="dropdown">likes + friends</div>
       </div>
       <div class="icon-item">
         <img src="https://i.imgur.com/NWxe1eJ.png">
-        <div class="dropdown">
-          <strong>mari</strong><br>
-          female, 15<br>
-          arab , brazilian<br>
-          muslim
-        </div>
+        <div class="dropdown">about</div>
       </div>
     </div>
 
-    <!-- post card -->
     <div class="card">
       <div class="header">
         <img class="pfp" src="https://i.imgur.com/vvIg9pi.jpeg">
@@ -157,99 +285,19 @@ body { background:#fdeff4; display:flex; justify-content:center; padding:40px 0 
           <div class="time">just now ♡</div>
         </div>
       </div>
+
       <img class="post-img" src="https://i.imgur.com/kZMMBCC.jpeg">
+
       <div class="actions">
         <img id="likeBtn" src="https://cdn-icons-png.flaticon.com/512/833/833300.png">
         <img src="https://cdn-icons-png.flaticon.com/512/1380/1380338.png">
         <img src="https://cdn-icons-png.flaticon.com/512/786/786205.png">
       </div>
+
       <div class="caption">'its okay to admit ur jealous of me'</div>
     </div>
+
   </div>
 </div>
-
-<!-- music player -->
-<div id="musicPlayer">
-  <div id="musicTop">
-    <img id="coverImg" src="https://i.imgur.com/izCL2C8.jpeg">
-    <div class="song-title" id="songTitle">cookie – NJZ</div>
-    <div class="controls">
-      <button onclick="playMusic()">play</button>
-      <button onclick="pauseMusic()">pause</button>
-      <button id="favToggle">🎵</button>
-    </div>
-  </div>
-  <div id="favSongs">
-    <h4>fav songs in rotation</h4>
-    <div class="song-item" data-src="mcookie.mp3" data-title="cookie – NJZ" data-cover="https://i.imgur.com/izCL2C8.jpeg">
-      <img src="https://i.imgur.com/izCL2C8.jpeg">
-      <span>cookie – NJZ</span>
-      <button>▶</button>
-    </div>
-    <div class="song-item" data-src="m365.mp3" data-title="365 – charli xcx" data-cover="https://i.imgur.com/qFkgD9Z.png">
-      <img src="https://i.imgur.com/qFkgD9Z.png">
-      <span>365 – charli xcx</span>
-      <button>▶</button>
-    </div>
-    <div class="song-item" data-src="mblonde.mp3" data-title="the blonde – tv girl" data-cover="https://i.imgur.com/bfql4mS.jpeg">
-      <img src="https://i.imgur.com/bfql4mS.jpeg">
-      <span>the blonde – tv girl</span>
-      <button>▶</button>
-    </div>
-    <div class="song-item" data-src="mamerican.mp3" data-title="american wedding – frank ocean" data-cover="https://i.imgur.com/za6MCuA.png">
-      <img src="https://i.imgur.com/za6MCuA.png">
-      <span>american wedding – frank ocean</span>
-      <button>▶</button>
-    </div>
-  </div>
-  <audio id="bgMusic" src="mcookie.mp3"></audio>
-</div>
-
-<script>
-// heart toggle
-const likeBtn = document.getElementById("likeBtn");
-likeBtn.addEventListener("click", () => {
-  likeBtn.src = likeBtn.src.includes("833300")
-    ? "https://cdn-icons-png.flaticon.com/512/833/833472.png"
-    : "https://cdn-icons-png.flaticon.com/512/833/833300.png";
-});
-
-// music player
-const music = document.getElementById("bgMusic");
-const coverImg = document.getElementById("coverImg");
-const songTitle = document.getElementById("songTitle");
-function playMusic(){ music.play(); }
-function pauseMusic(){ music.pause(); }
-
-// song selection
-document.querySelectorAll(".song-item").forEach(item=>{
-  const playBtn=item.querySelector("button");
-  playBtn.addEventListener("click",e=>{ e.stopPropagation(); playSong(item); });
-  item.addEventListener("click",()=>playSong(item));
-});
-function playSong(item){
-  music.src=item.dataset.src;
-  songTitle.textContent=item.dataset.title;
-  coverImg.src=item.dataset.cover;
-  music.play();
-}
-
-// toggle fav songs with animation
-const favToggle=document.getElementById("favToggle");
-const favSongs=document.getElementById("favSongs");
-favToggle.addEventListener("click",()=>{
-  if(favSongs.classList.contains("active")){
-    favSongs.style.height=favSongs.scrollHeight+"px"; // set current height
-    requestAnimationFrame(()=>{ favSongs.style.height="0px"; });
-    favSongs.addEventListener("transitionend",()=>{ favSongs.classList.remove("active"); favSongs.style.height=""; }, {once:true});
-  } else {
-    favSongs.classList.add("active");
-    favSongs.style.height="0px";
-    requestAnimationFrame(()=>{ favSongs.style.height=favSongs.scrollHeight+"px"; });
-    favSongs.addEventListener("transitionend",()=>{ favSongs.style.height=""; }, {once:true});
-  }
-});
-</script>
-
 </body>
 </html>
